@@ -23,7 +23,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                bat 'npx vercel --prod --yes --token=%VERCEL_TOKEN%'
+                bat 'npx vercel --prod --name=nextjs-jenkins --yes --token=%VERCEL_TOKEN%'
             }
         }
     }
