@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
-    }
-
     stages {
         stage('install') {
             steps {
@@ -18,7 +14,9 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                bat 'cd my-app && npx vercel --prod --yes --token=%VERCEL_TOKEN%'
+                withCredentials([string(credentialsId: 'VERCEL_TOKEN', variable: 'VERCEL_TOKEN')]) {
+                    bat 'cd my-app && npx vercel --prod --yes --token=%VERCEL_TOKEN%'
+                }
             }
         }
     }
