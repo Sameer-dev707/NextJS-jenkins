@@ -1,29 +1,24 @@
 pipeline {
-    agent any 
+    agent any
 
     environment {
-        VERCEL_TOKEN = credentials('vercel_token')
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
     }
 
     stages {
         stage('install') {
             steps {
-                bat 'npm install'
-            }
-        }
-        stage('test') {
-            steps {
-                echo 'skipping test'
+                bat 'cd my-app && npm install'
             }
         }
         stage('build') {
             steps {
-                bat 'npm run build'
+                bat 'cd my-app && npm run build'
             }
         }
         stage('deploy') {
             steps {
-                bat 'npx vercel --prod --name=nextjs-jenkins --yes --token=%VERCEL_TOKEN%'
+                bat 'cd my-app && npx vercel --prod --yes --token=%VERCEL_TOKEN%'
             }
         }
     }
