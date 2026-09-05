@@ -22,8 +22,7 @@ node {
            cd ${appDir}
            sudo npm install
            sudo npm run build
-           sudo fuser -k 3000/tcp || true
-           npm run start
-          """
+            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
+      """
     }
 }
